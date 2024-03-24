@@ -6,7 +6,6 @@ import datetime
 
 def print_ls_format(directory,human_readable=False):
     """Recursively print directory contents in 'ls' format."""
-    import pdb;pdb.set_trace()
     if human_readable:
         result = []
         for item in directory:
@@ -69,7 +68,6 @@ def print_l_format(directory, indent=0, show_all=False, reverse_order=False,time
         print(f"{perm} {size:>5} {mtime} {item['name']}")
 
 def main():
-    import pdb;pdb.set_trace()
     parser = argparse.ArgumentParser(description='Python implementation of ls command')
     parser.add_argument('-A', action='store_true', help='List all entries including those starting with .')
     parser.add_argument('-l', action='store_true', help='Use a long listing format')
@@ -81,8 +79,6 @@ def main():
     parser.add_argument('--path', help='Path to directory or file (default: current directory)')
     
     args = parser.parse_args()
-    import pdb;pdb.set_trace()
-
     # Validate filter option
     valid_filters = ['file', 'dir']
     if args.filter and args.filter not in valid_filters:

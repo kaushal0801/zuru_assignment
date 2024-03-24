@@ -1,7 +1,6 @@
 import json
 import sys
 import argparse
-import os
 import datetime
 
 def print_ls_format(directory,human_readable=False):

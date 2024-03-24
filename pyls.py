@@ -5,7 +5,7 @@ import os
 import datetime
 
 def print_ls_format(directory,human_readable=False):
-    """Recursively print directory contents in 'ls' format."""
+    # Recursively print output in 'ls' format
     if human_readable:
         result = []
         for item in directory:
@@ -22,7 +22,7 @@ def print_ls_format(directory,human_readable=False):
         print("  ".join(result))
 
 def print_ls_A_format(directory,human_readable=False):
-    """Recursively print directory contents in 'ls' format."""
+    # Recursively print contents of directory in 'ls format', including file starting with '.'
     result = []
     for item in directory:
         result.append(item['name'])
@@ -37,7 +37,7 @@ def get_readable_size(size):
     return f"{size:.1f} {suffixes[index]}"
 
 def print_l_format(directory, indent=0, show_all=False, reverse_order=False,time_order=False,filter_option=None, human_readable=False):
-    """Recursively print directory contents in 'ls' format."""
+    # changing order based on reverse paramenter
     if reverse_order:
         if time_order:
             directory.sort(key=lambda x: x.get('time_modified', 0), reverse=True)
@@ -64,7 +64,7 @@ def print_l_format(directory, indent=0, show_all=False, reverse_order=False,time
         else:
             size = item.get('size', '')
         mtime = datetime.datetime.fromtimestamp(item.get('time_modified', 0)).strftime("%b %d %H:%M")    
-        # Making size right aligned
+        # Changing alignment to right
         print(f"{perm} {size:>5} {mtime} {item['name']}")
 
 def main():
@@ -79,12 +79,12 @@ def main():
     parser.add_argument('--path', help='Path to directory or file (default: current directory)')
     
     args = parser.parse_args()
+
     # Validate filter option
     valid_filters = ['file', 'dir']
     if args.filter and args.filter not in valid_filters:
         print(f"error: '{args.filter}' is not a valid filargs.pathter criteria. Available filters are {', '.join(valid_filters)}")
         sys.exit(1)
-
 
     try:
         with open('structure.json') as f:
@@ -95,8 +95,7 @@ def main():
 
 
     if args.path:
-        # Find the target directory or file in the data    if args.path:
-
+        # Find the target directory or file in the data
         target_item = None
         for item in data['contents']:  
             if item['name'] == args.path.split('/')[-1]:
@@ -112,6 +111,7 @@ def main():
             print(f"error: cannot access '{args.path}': No such file or directory")
             sys.exit(1)
 
+        # if contents is there in target_item, means it is a directory
         if target_item and target_item.get('contents',None):
             if args.l:
                 print_l_format(target_item['contents'], show_all=args.A, reverse_order=args.r, filter_option=args.filter,human_readable=args.H)
